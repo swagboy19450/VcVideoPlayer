@@ -1,7 +1,7 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from config import SOURCE_CODE, ASSISTANT_NAME, SUPPORT_GROUP, UPDATES_CHANNEL, BOT_USERNAME
-from player.tr import *
+from plugins.tr import *
 from pyrogram.errors import MessageNotModified
 
 @Client.on_message(filters.command("start"))
