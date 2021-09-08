@@ -63,6 +63,7 @@ async def stream(client, m: Message):
                     stream_type=StreamType().local_stream,
                 )
                 await msg.edit("**Started Streaming!**")
+                await idle()
             except Exception as e:
                 await msg.edit(f"**Error** -- `{e}`")
    
@@ -71,7 +72,7 @@ async def stream(client, m: Message):
         video = await client.download_media(m.reply_to_message)
         chat_id = m.chat.id
         await msg.edit("`Processing...`")
-        os.system("ffmpeg -i '{video}' -f s16le -ac 1 -ar 48000 'audio{chat_id}.raw' -y -f rawvideo -r 20 -pix_fmt yuv420p -vf scale=640:360 'video{chat_id}.raw' -y")
+        os.system(f"ffmpeg -i '{video}' -f s16le -ac 1 -ar 48000 'audio{chat_id}.raw' -y -f rawvideo -r 20 -pix_fmt yuv420p -vf scale=640:360 'video{chat_id}.raw' -y")
         try:
             audio_file = f'audio{chat_id}.raw'
             video_file = f'video{chat_id}.raw'
@@ -99,6 +100,7 @@ async def stream(client, m: Message):
             await msg.edit("**Started Streaming!**")
         except Exception as e:
             await msg.edit(f"**Error** -- `{e}`")
+            await idle()
     else:
         await m.reply("`Reply to some Video!`")
 
