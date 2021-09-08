@@ -14,6 +14,7 @@ from config import API_ID, API_HASH, SESSION_NAME
 
 app = Client(SESSION_NAME, API_ID, API_HASH)
 call_py = PyTgCalls(app)
+await call_py.start()
 def raw_converter(dl, song, video):
     subprocess.Popen(
         ['ffmpeg', '-i', dl, '-f', 's16le', '-ac', '1', '-ar', '48000', song, '-y', '-f', 'rawvideo', '-r', '20', '-pix_fmt', 'yuv420p', '-vf', 'scale=1280:720', video, '-y'],
@@ -22,6 +23,7 @@ def raw_converter(dl, song, video):
         stderr=None,
         cwd=None,
     )
+
 
 @Client.on_message(filters.command("stream"))
 async def stream(client, m: Message):
@@ -36,7 +38,6 @@ async def stream(client, m: Message):
             msg = await m.reply("`Starting Live Stream...`")
             await asyncio.sleep(5)
             try:
-                await call_py.start()
                 audio_file = f'audio{chat_id}.raw'
                 video_file = f'video{chat_id}.raw'
                 while not os.path.exists(audio_file) or \
@@ -60,7 +61,6 @@ async def stream(client, m: Message):
                     ),
                     stream_type=StreamType().local_stream,
                 )
-                await idle()
                 await msg.edit("**Started Streaming!**")
             except Exception as e:
                 await msg.edit(f"**Error** -- `{e}`")
@@ -70,10 +70,8 @@ async def stream(client, m: Message):
         video = await client.download_media(m.reply_to_message)
         chat_id = m.chat.id
         await msg.edit("`Processing...`")
-        raw_converter(video, f'audio{chat_id}.raw', f'video{chat_id}.raw')
-        await asyncio.sleep(5)
+        os.system("ffmpeg -i f'{video}' -f s16le -ac 1 -ar 48000 f'audio{chat_id}.raw' -y -f rawvideo -r 20 -pix_fmt yuv420p -vf scale=640:360 f'video{chat_id}.raw' -y")
         try:
-            await call_py.start()
             audio_file = f'audio{chat_id}.raw'
             video_file = f'video{chat_id}.raw'
             while not os.path.exists(audio_file) or \
@@ -90,14 +88,13 @@ async def stream(client, m: Message):
                 InputVideoStream(
                     video_file,
                     VideoParameters(
-                        width=1280,
-                        height=720,
+                        width=640,
+                        height=360,
                         frame_rate=20,
                     ),
                 ),
                 stream_type=StreamType().local_stream,
             )
-            await idle()
             await msg.edit("**Started Streaming!**")
         except Exception as e:
             await msg.edit(f"**Error** -- `{e}`")
@@ -112,3 +109,5 @@ async def stopvideo(client, m: Message):
         await m.reply("**⏹️ Stopped Streaming!**")
     except Exception as e:
         await m.reply(f"**🚫 Error** - `{e}`")
+        
+await idle()
