@@ -33,15 +33,16 @@ async def stream(client, m: Message):
         else:
             livelink = m.text.split(None, 1)[1]
             chat_id = m.chat.id
-            raw_converter(livelink, f'audio{chat_id}.raw', f'video{chat_id}.raw')
+            process = raw_converter(livelink, f'audio{chat_id}.raw', f'video{chat_id}.raw')
+            FFMPEG_PROCESSES[chat_id] = process
             msg = await m.reply("`Starting Live Stream...`")
-            await asyncio.sleep(5)
+            await asyncio.sleep(10)
             try:
                 audio_file = f'audio{chat_id}.raw'
                 video_file = f'video{chat_id}.raw'
                 while not os.path.exists(audio_file) or \
                         not os.path.exists(video_file):
-                    time.sleep(0.125)
+                    await asyncio.sleep(2)
                 await call_py.join_group_call(
                     chat_id,
                     InputAudioStream(
@@ -76,7 +77,7 @@ async def stream(client, m: Message):
             video_file = f'video{chat_id}.raw'
             while not os.path.exists(audio_file) or \
                     not os.path.exists(video_file):
-                time.sleep(0.125)
+                await asyncio.sleep(2)
             await call_py.join_group_call(
                 chat_id,
                 InputAudioStream(
@@ -106,6 +107,13 @@ async def stream(client, m: Message):
 async def stopvideo(client, m: Message):
     chat_id = m.chat.id
     try:
+        process = FFMPEG_PROCESSES.get(chat_id)
+        if process:
+            try:
+                process.send_signal(SIGINT)
+                await asyncio.sleep(3)
+            except Exception as e:
+                print(e)
         await call_py.leave_group_call(chat_id)
         await m.reply("**⏹️ Stopped Streaming!**")
     except Exception as e:
