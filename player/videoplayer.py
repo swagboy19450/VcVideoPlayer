@@ -1,5 +1,6 @@
 import os
 import asyncio
+import subprocess
 from pytgcalls import idle
 from pytgcalls import PyTgCalls
 from pytgcalls import StreamType
@@ -13,19 +14,63 @@ from config import API_ID, API_HASH, SESSION_NAME
 
 app = Client(SESSION_NAME, API_ID, API_HASH)
 call_py = PyTgCalls(app)
+def raw_converter(dl, song, video):
+    subprocess.Popen(
+        ['ffmpeg', '-i', dl, '-f', 's16le', '-ac', '1', '-ar', '48000', song, '-y', '-f', 'rawvideo', '-r', '20', '-pix_fmt', 'yuv420p', '-vf', 'scale=1280:720', video, '-y'],
+        stdin=None,
+        stdout=None,
+        stderr=None,
+        cwd=None,
+    )
 
 @Client.on_message(filters.command("stream"))
 async def stream(client, m: Message):
     replied = m.reply_to_message
     if not replied:
-        await m.reply("`Reply to some Video!`")
+        if len(m.command) < 2:
+            await m.reply("`Reply to some Video or Give Some Live Stream Url!`")
+        else:
+            livelink = m.text.split(None, 1)[1]
+            raw_converter(livelink, f'audio{chat_id}.raw', f'video{chat_id}.raw')
+            msg = await m.reply("`Starting Live Stream...`")
+            chat_id = m.chat.id
+            await asyncio.sleep(5)
+            try:
+                await call_py.start()
+                audio_file = f'audio{chat_id}.raw'
+                video_file = f'video{chat_id}.raw'
+                while not os.path.exists(audio_file) or \
+                        not os.path.exists(video_file):
+                    time.sleep(0.125)
+                await call_py.join_group_call(
+                    chat_id,
+                    InputAudioStream(
+                        audio_file,
+                        AudioParameters(
+                            bitrate=48000,
+                        ),
+                    ),
+                    InputVideoStream(
+                        video_file,
+                        VideoParameters(
+                            width=1280,
+                            height=720,
+                            frame_rate=20,
+                        ),
+                    ),
+                    stream_type=StreamType().local_stream,
+                )
+                await idle()
+            except Exception as e:
+                await msg.edit(f"**Error** -- `{e}`")
    
     elif replied.video or replied.document:
         msg = await m.reply("`Downloading...`")
         video = await client.download_media(m.reply_to_message)
         chat_id = m.chat.id
         await msg.edit("`Processing...`")
-        os.system("ffmpeg -i f'{video}' -f s16le -ac 1 -ar 48000 f'audio{chat_id}.raw' -f rawvideo -r 20 -pix_fmt yuv420p -vf scale=640:-1 f'video{chat_id}.raw'")
+        raw_converter(video, f'audio{chat_id}.raw', f'video{chat_id}.raw')
+        await asyncio.sleep(5)
         try:
             await call_py.start()
             audio_file = f'audio{chat_id}.raw'
