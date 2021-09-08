@@ -11,10 +11,9 @@ bot = Client(
     plugins=dict(root="player"),
 )
 
-async def huehue():
-    await bot.start()
-    await app.start()
-    await call_py.start()
-    await idle()
+
+bot.start()
+app.start()
+call_py.start()
+idle()
     
-huehue()
