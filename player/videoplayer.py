@@ -24,7 +24,7 @@ async def stream(client, m: Message):
             try:
                 group_call = group_call_factory.get_group_call()
                 await group_call.join(chat_id)
-                await group_call.start_video(livelink)
+                await group_call.start_video(livelink, enable_experimental_lip_sync=True)
                 VIDEO_CALL[chat_id] = group_call
                 await msg.edit(f"**▶️ Started [Live Streaming](livelink) !**")
             except Exception as e:
@@ -45,7 +45,7 @@ async def stream(client, m: Message):
     else:
         await m.reply("`Reply to some Video!`")
 
-@Client.on_message(filters.command("stop"))
+@Client.on_message(filters.command("stopstream"))
 async def stopvideo(client, m: Message):
     chat_id = m.chat.id
     try:
