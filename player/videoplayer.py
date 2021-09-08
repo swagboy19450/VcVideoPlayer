@@ -31,9 +31,9 @@ async def stream(client, m: Message):
             await m.reply("`Reply to some Video or Give Some Live Stream Url!`")
         else:
             livelink = m.text.split(None, 1)[1]
+            chat_id = m.chat.id
             raw_converter(livelink, f'audio{chat_id}.raw', f'video{chat_id}.raw')
             msg = await m.reply("`Starting Live Stream...`")
-            chat_id = m.chat.id
             await asyncio.sleep(5)
             try:
                 await call_py.start()
@@ -90,8 +90,8 @@ async def stream(client, m: Message):
                 InputVideoStream(
                     video_file,
                     VideoParameters(
-                        width=640,
-                        height=360,
+                        width=1280,
+                        height=720,
                         frame_rate=20,
                     ),
                 ),
@@ -108,9 +108,7 @@ async def stream(client, m: Message):
 async def stopvideo(client, m: Message):
     chat_id = m.chat.id
     try:
-        await call_py.start()
         await call_py.leave_group_call(chat_id)
         await m.reply("**⏹️ Stopped Streaming!**")
-        await idle()
     except Exception as e:
         await m.reply(f"**🚫 Error** - `{e}`")
