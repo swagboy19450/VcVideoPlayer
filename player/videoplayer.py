@@ -14,7 +14,7 @@ from config import API_ID, API_HASH, SESSION_NAME
 
 app = Client(SESSION_NAME, API_ID, API_HASH)
 call_py = PyTgCalls(app)
-await call_py.start()
+call_py.start()
 def raw_converter(dl, song, video):
     subprocess.Popen(
         ['ffmpeg', '-i', dl, '-f', 's16le', '-ac', '1', '-ar', '48000', song, '-y', '-f', 'rawvideo', '-r', '20', '-pix_fmt', 'yuv420p', '-vf', 'scale=1280:720', video, '-y'],
@@ -110,4 +110,4 @@ async def stopvideo(client, m: Message):
     except Exception as e:
         await m.reply(f"**🚫 Error** - `{e}`")
         
-await idle()
+idle()
