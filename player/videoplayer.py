@@ -61,6 +61,7 @@ async def stream(client, m: Message):
                     stream_type=StreamType().local_stream,
                 )
                 await idle()
+                await msg.edit("**Started Streaming!**")
             except Exception as e:
                 await msg.edit(f"**Error** -- `{e}`")
    
@@ -97,6 +98,7 @@ async def stream(client, m: Message):
                 stream_type=StreamType().local_stream,
             )
             await idle()
+            await msg.edit("**Started Streaming!**")
         except Exception as e:
             await msg.edit(f"**Error** -- `{e}`")
     else:
