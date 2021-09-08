@@ -14,7 +14,6 @@ from config import API_ID, API_HASH, SESSION_NAME
 
 app = Client(SESSION_NAME, API_ID, API_HASH)
 call_py = PyTgCalls(app)
-call_py.start()
 def raw_converter(dl, song, video):
     subprocess.Popen(
         ['ffmpeg', '-i', dl, '-f', 's16le', '-ac', '1', '-ar', '48000', song, '-y', '-f', 'rawvideo', '-r', '20', '-pix_fmt', 'yuv420p', '-vf', 'scale=1280:720', video, '-y'],
@@ -40,6 +39,7 @@ async def stream(client, m: Message):
             try:
                 audio_file = f'audio{chat_id}.raw'
                 video_file = f'video{chat_id}.raw'
+                await call_py.start()
                 while not os.path.exists(audio_file) or \
                         not os.path.exists(video_file):
                     time.sleep(0.125)
@@ -74,6 +74,7 @@ async def stream(client, m: Message):
         try:
             audio_file = f'audio{chat_id}.raw'
             video_file = f'video{chat_id}.raw'
+            await call_py.start()
             while not os.path.exists(audio_file) or \
                     not os.path.exists(video_file):
                 time.sleep(0.125)
@@ -107,7 +108,7 @@ async def stopvideo(client, m: Message):
     try:
         await call_py.leave_group_call(chat_id)
         await m.reply("**⏹️ Stopped Streaming!**")
+        await call_py.stop()
     except Exception as e:
         await m.reply(f"**🚫 Error** - `{e}`")
         
-idle()
