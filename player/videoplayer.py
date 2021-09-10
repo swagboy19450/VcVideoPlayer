@@ -11,6 +11,7 @@ from pytgcalls.types.input_stream import VideoParameters
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from config import API_ID, API_HASH, SESSION_NAME
+from helper.decorators import authorized_users_only
 
 app = Client(SESSION_NAME, API_ID, API_HASH)
 call_py = PyTgCalls(app)
@@ -26,17 +27,18 @@ def raw_converter(dl, song, video):
 
 
 @Client.on_message(filters.command("stream"))
+@authorized_users_only
 async def stream(client, m: Message):
     replied = m.reply_to_message
     if not replied:
         if len(m.command) < 2:
-            await m.reply("`Reply to some Video or Give Some Live Stream Url!`")
+            await m.reply("`Reply to some Video File!`")
         else:
             livelink = m.text.split(None, 1)[1]
             chat_id = m.chat.id
             process = raw_converter(livelink, f'audio{chat_id}.raw', f'video{chat_id}.raw')
             FFMPEG_PROCESSES[chat_id] = process
-            msg = await m.reply("`Starting Live Stream...`")
+            msg = await m.reply("`Starting Video Stream...`")
             await asyncio.sleep(10)
             try:
                 audio_file = f'audio{chat_id}.raw'
@@ -62,7 +64,7 @@ async def stream(client, m: Message):
                     ),
                     stream_type=StreamType().local_stream,
                 )
-                await msg.edit("**Started Streaming!**")
+                await msg.edit("**Started Video Stream!**")
                 await idle()
             except Exception as e:
                 await msg.edit(f"**Error** -- `{e}`")
@@ -97,7 +99,7 @@ async def stream(client, m: Message):
                 ),
                 stream_type=StreamType().local_stream,
             )
-            await msg.edit("**Started Streaming!**")
+            await msg.edit("**Started Video Stream!**")
         except Exception as e:
             await msg.edit(f"**Error** -- `{e}`")
             await idle()
@@ -105,6 +107,7 @@ async def stream(client, m: Message):
         await m.reply("`Reply to some Video!`")
 
 @Client.on_message(filters.command("stopstream"))
+@authorized_users_only
 async def stopvideo(client, m: Message):
     chat_id = m.chat.id
     try:
@@ -116,7 +119,7 @@ async def stopvideo(client, m: Message):
             except Exception as e:
                 print(e)
         await call_py.leave_group_call(chat_id)
-        await m.reply("**⏹️ Stopped Streaming!**")
+        await m.reply("**⏹️ Stop Video Stream!**")
     except Exception as e:
         await m.reply(f"**🚫 Error** - `{e}`")
         
