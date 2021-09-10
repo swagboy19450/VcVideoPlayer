@@ -43,6 +43,10 @@
             "description": "Your bot token from @botfather",
             "required": true
         },
+        "SUDO_USERS": {
+            "description": "Put Your id",
+            "required": true
+        },
         "SESSION_NAME": {
             "description": "Pyrogram String Session",
             "required": true
