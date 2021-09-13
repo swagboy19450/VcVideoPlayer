@@ -187,7 +187,6 @@ async def chstream(client, m: Message):
             chat_id = CHANNEL
             process = raw_converter(livelink, f'audio{chat_id}.raw', f'video{chat_id}.raw')
             FFMPEG_PROCESSES[chat_id] = process
-            msg = await m.reply("`Starting Video Stream...`")
             await asyncio.sleep(10)
             try:
                 audio_file = f'audio{chat_id}.raw'
