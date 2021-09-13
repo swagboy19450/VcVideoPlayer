@@ -166,7 +166,24 @@ async def chstream(client, m: Message):
         if len(m.command) < 2:
             await m.reply("`Reply to some Video File!`")
         else:
-            livelink = m.text.split(None, 1)[1]
+            query = m.text.split(None, 1)[1]
+            regex = r"^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+"
+            match = re.match(regex,query)
+            if match:
+                try:
+                    meta = ydl.extract_info(query, download=False)
+                    formats = meta.get('formats', [meta])
+                    for f in formats:
+                        ytstreamlink = f['url']
+                    livelink = ytstreamlink
+                    msg = await m.reply("`Starting YT Stream...`")
+                except Exception as e:
+                    msg = await m.reply(f"{e}")
+                    return
+            else:
+                livelink = query
+                msg = await m.reply("`Starting Video Stream...`")
+                    
             chat_id = CHANNEL
             process = raw_converter(livelink, f'audio{chat_id}.raw', f'video{chat_id}.raw')
             FFMPEG_PROCESSES[chat_id] = process
