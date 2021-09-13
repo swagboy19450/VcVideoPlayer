@@ -205,8 +205,8 @@ async def chstream(client, m: Message):
                     InputVideoStream(
                         video_file,
                         VideoParameters(
-                            width=1280,
-                            height=720,
+                            width=640,
+                            height=360,
                             frame_rate=20,
                         ),
                     ),
