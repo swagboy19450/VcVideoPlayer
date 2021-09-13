@@ -17,10 +17,13 @@ The easiest way to deploy this Bot is via Heroku.
 
 <a href="https://t.me/DeeCodeBots"><img src="https://img.shields.io/badge/Louis-purple.svg?logo=Telegram"></a>
 <a href="t.me/ProErrorXD"><img src="https://img.shields.io/badge/Error-brown.svg?logo=telegram"></a>
+
 <a href="https://t.me/piroXpower"><img src="https://img.shields.io/badge/Blaze-blue.svg?logo=Telegram"></a>
 <a href="t.me/jalim_munda"><img src="https://img.shields.io/badge/Harsh-green.svg?logo=telegram"></a>
+
 <a href="https://t.me/DEVILDAD_PRINCE"><img src="https://img.shields.io/badge/Devil-red.svg?logo=Telegram"></a>
 <a href="t.me/Pratheek_XD"><img src="https://img.shields.io/badge/Habibi-yellow.svg?logo=telegram"></a>
+
 <a href="https://t.me/imsafone"><img src="https://img.shields.io/badge/Safone-black.svg?logo=Telegram"></a>
 <a href="t.me/SammyXD"><img src="https://img.shields.io/badge/Sammy-pink.svg?logo=telegram"></a>
 
