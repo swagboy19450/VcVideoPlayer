@@ -23,6 +23,10 @@ The easiest way to deploy this Bot is via Heroku.
 [![Lokaman](https://img.shields.io/badge/Lokaman-1b77FF.svg?style=for-the-badge&logo=telegram)](https://t.me/mrlokaman)
 [![Safone](https://img.shields.io/badge/Safone-1b77FF.svg?style=for-the-badge&logo=telegram)](https://t.me/imSafone)
 
+<a href="https://t.me/DeeCodeBots"><img src="https://img.shields.io/badge/Louis-purple.svg?logo=Telegram"></a>
+<a href="t.me/ProErrorXD"><img src="https://img.shields.io/badge/Error-brown.svg?logo=telegram"></a>
+
+
 # Special Thanks To 💞
 
 - [Laky](https://github.com/Laky-64) for [pytgcalls](https://github.com/pytgcalls/pytgcalls)
