@@ -20,7 +20,7 @@ The easiest way to deploy this Bot is via Heroku.
 |🇮🇳 Blaze
 |🇮🇳 Safone
 ```
-- [MarshalX](https://github.com/MarshalX) for [pytgcalls](https://github.com/MarshalX/tgcalls)
+- [Laky](https://github.com/Laky-64) for [pytgcalls](https://github.com/pytgcalls/pytgcalls)
 - [Dan](https://github.com/delivrance) for [Pyrogram](https://github.com/pyrogram/pyrogram)
 
 
