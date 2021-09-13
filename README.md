@@ -15,8 +15,8 @@ The easiest way to deploy this Bot is via Heroku.
 
 # Our Credit🔥
 
-<a href="https://t.me/DeeCodeBots"><img src="https://img.shields.io/Louis-purple.svg?logo=Telegram"></a>
-<a href="t.me/ProErrorXD"><img src="https://img.shields.io/Error-brown.svg?logo=telegram"></a>
+<a href="https://t.me/DeeCodeBots"><img src="https://img.shields.io/badge/Louis-purple.svg?logo=Telegram"></a>
+<a href="t.me/ProErrorXD"><img src="https://img.shields.io/badge/Error-brown.svg?logo=telegram"></a>
 
 
 # Special Thanks To 💞
