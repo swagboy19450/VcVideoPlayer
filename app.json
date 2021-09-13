@@ -24,7 +24,7 @@
             "required": true
         },
         "CHANNEL": {
-            "description": "Your Channel User Name With @ Note(add @)",
+            "description": "Your Channel User id",
             "required": true
         },
         "ASSISTANT_NAME": {
