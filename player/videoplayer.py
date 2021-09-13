@@ -48,13 +48,22 @@ async def stream(client, m: Message):
                     for f in formats:
                         ytstreamlink = f['url']
                     livelink = ytstreamlink
-                    msg = await m.reply("`Starting YT Stream...`")
+                    dir = os.listdir()
+                    if f"{meta['id']}.mp3.jpg" in dir:
+                        photoid = f"{meta['id']}.mp3.jpg"
+                    elif f"{meta['id']}.mp3.webp" in dir:
+                        photoid = f"{meta['id']}.mp3.webp"
+                    else:
+                        photoid = "https://telegra.ph/file/62e86d8aadde9a8cbf9c2.jpg"
+                    msg = await m.reply_photo(photo=photoid, caption="`Starting YT Stream...`")
+                    
                 except Exception as e:
                     msg = await m.reply(f"{e}")
                     return
             else:
                 livelink = query
-                msg = await m.reply("`Starting Video Stream...`")
+                photoid = "https://telegra.ph/file/62e86d8aadde9a8cbf9c2.jpg"
+                msg = await m.reply_photo(photo=photoid, caption="`Starting Video Stream...`")
                     
             chat_id = m.chat.id
             process = raw_converter(livelink, f'audio{chat_id}.raw', f'video{chat_id}.raw')
@@ -84,16 +93,22 @@ async def stream(client, m: Message):
                     ),
                     stream_type=StreamType().local_stream,
                 )
-                await msg.edit(f"**Started [Video Stream]({livelink}) !**")
+                await msg.edit_caption(f"**Started [Video Stream]({livelink}) !**")
                 await idle()
             except Exception as e:
-                await msg.edit(f"**Error** -- `{e}`")
+                await msg.edit_caption(f"**Error** -- `{e}`")
    
     elif replied.video or replied.document:
-        msg = await m.reply("`Downloading...`")
+        if replied.video.thumbs:
+            huehue = replied.video.thumbs[0]
+            umm = await client.download_media(huehue['file_id'])
+            photoid = umm
+        else:
+            photoid = "https://telegra.ph/file/62e86d8aadde9a8cbf9c2.jpg"
+        msg = await m.reply_photo(photo=photoid, caption="`Downloading...`")
         video = await client.download_media(m.reply_to_message)
         chat_id = m.chat.id
-        await msg.edit("`Processing...`")
+        await msg.edit_caption("`Processing...`")
         os.system(f"ffmpeg -i '{video}' -f s16le -ac 1 -ar 48000 'audio{chat_id}.raw' -y -f rawvideo -r 20 -pix_fmt yuv420p -vf scale=640:360 'video{chat_id}.raw' -y")
         try:
             audio_file = f'audio{chat_id}.raw'
@@ -119,9 +134,9 @@ async def stream(client, m: Message):
                 ),
                 stream_type=StreamType().local_stream,
             )
-            await msg.edit("**Started Video Stream!**")
+            await msg.edit_caption("**Started Video Stream!**")
         except Exception as e:
-            await msg.edit(f"**Error** -- `{e}`")
+            await msg.edit_caption(f"**Error** -- `{e}`")
             await idle()
     else:
         await m.reply("`Reply to some Video!`")
