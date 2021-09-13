@@ -145,7 +145,7 @@ async def stopvideo(client, m: Message):
         
 
 #channel Stream
-@Client.on_message(filters.private & filters.user(ADMIN) & filters.command(["chstream"]))
+@Client.on_message(filters.private & filters.user(ADMIN) & filters.command(["cplay"]))
 async def chstream(client, m: Message):
     replied = m.reply_to_message
     if not replied:
@@ -224,7 +224,7 @@ async def chstream(client, m: Message):
     else:
         await m.reply("`Reply to some Video!`")
 
-@Client.on_message(filters.private & filters.user(ADMIN) & filters.command(["chstopstream"]))
+@Client.on_message(filters.private & filters.user(ADMIN) & filters.command(["cstop"]))
 async def chstopvideo(client, m: Message):
     chat_id = CHANNEL
     try:
