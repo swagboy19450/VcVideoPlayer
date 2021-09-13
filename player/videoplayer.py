@@ -14,6 +14,7 @@ from pyrogram.types import Message
 from config import API_ID, API_HASH, SESSION_NAME,ADMIN,CHANNEL
 from helper.decorators import authorized_users_only
 from youtube_dl import YoutubeDL
+from youtubesearchpython import VideosSearch
 
 app = Client(SESSION_NAME, API_ID, API_HASH)
 call_py = PyTgCalls(app)
@@ -48,15 +49,13 @@ async def stream(client, m: Message):
                     for f in formats:
                         ytstreamlink = f['url']
                     livelink = ytstreamlink
-                    dir = os.listdir()
-                    if f"{meta['id']}.mp3.jpg" in dir:
-                        photoid = f"{meta['id']}.mp3.jpg"
-                    elif f"{meta['id']}.mp3.webp" in dir:
-                        photoid = f"{meta['id']}.mp3.webp"
-                    else:
-                        photoid = "https://telegra.ph/file/62e86d8aadde9a8cbf9c2.jpg"
+                    search = VideosSearch(query, limit=1)
+                    opp = search.result()["result"]
+                    oppp = opp[0]
+                    thumbid = oppp["thumbnails"][0]["url"]
+                    split = thumbid.split("?")
+                    photoid = split[0].strip()
                     msg = await m.reply_photo(photo=photoid, caption="`Starting YT Stream...`")
-                    
                 except Exception as e:
                     msg = await m.reply(f"{e}")
                     return
