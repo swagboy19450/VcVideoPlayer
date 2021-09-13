@@ -84,7 +84,7 @@ async def stream(client, m: Message):
                     ),
                     stream_type=StreamType().local_stream,
                 )
-                await msg.edit("**Started Video Stream!**")
+                await msg.edit(f"**Started [Video Stream]({livelink}) !**")
                 await idle()
             except Exception as e:
                 await msg.edit(f"**Error** -- `{e}`")
