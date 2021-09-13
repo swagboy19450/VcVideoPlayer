@@ -12,18 +12,21 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 from config import API_ID, API_HASH, SESSION_NAME
 from helper.decorators import authorized_users_only
+from youtube_dl import YoutubeDL
 
 app = Client(SESSION_NAME, API_ID, API_HASH)
 call_py = PyTgCalls(app)
 FFMPEG_PROCESSES = {}
 def raw_converter(dl, song, video):
     subprocess.Popen(
-        ['ffmpeg', '-i', dl, '-f', 's16le', '-ac', '1', '-ar', '48000', song, '-y', '-f', 'rawvideo', '-r', '20', '-pix_fmt', 'yuv420p', '-vf', 'scale=1280:720', video, '-y'],
+        ['ffmpeg', '-i', dl, '-f', 's16le', '-ac', '1', '-ar', '48000', song, '-y', '-f', 'rawvideo', '-r', '20', '-pix_fmt', 'yuv420p', '-vf', 'scale=640:360', video, '-y'],
         stdin=None,
         stdout=None,
         stderr=None,
         cwd=None,
     )
+opts = {"format": "best[height=?480]/best", "noplaylist": True}
+ydl = YoutubeDL(opts)
 
 
 @Client.on_message(filters.command("stream"))
@@ -34,11 +37,26 @@ async def stream(client, m: Message):
         if len(m.command) < 2:
             await m.reply("`Reply to some Video File!`")
         else:
-            livelink = m.text.split(None, 1)[1]
+            query = m.text.split(None, 1)[1]
+            regex = r"^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+"
+            match = re.match(regex,query)
+            if match:
+                try:
+                    meta = ydl.extract_info(query, download=False)
+                    formats = meta.get('formats', [meta])
+                    for f in formats:
+                        ytstreamlink = f['url']
+                    livelink = ytstreamlink
+                    msg = await m.reply("`Starting YT Stream...`")
+                except Exception as e:
+                    msg = await m.reply(f"{e}")
+                    return
+            else:
+                livelink = query
+                    
             chat_id = m.chat.id
             process = raw_converter(livelink, f'audio{chat_id}.raw', f'video{chat_id}.raw')
             FFMPEG_PROCESSES[chat_id] = process
-            msg = await m.reply("`Starting Video Stream...`")
             await asyncio.sleep(10)
             try:
                 audio_file = f'audio{chat_id}.raw'
@@ -57,8 +75,8 @@ async def stream(client, m: Message):
                     InputVideoStream(
                         video_file,
                         VideoParameters(
-                            width=1280,
-                            height=720,
+                            width=640,
+                            height=360,
                             frame_rate=20,
                         ),
                     ),
