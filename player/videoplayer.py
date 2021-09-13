@@ -54,6 +54,7 @@ async def stream(client, m: Message):
                     return
             else:
                 livelink = query
+                msg = await m.reply("`Starting Video Stream...`")
                     
             chat_id = m.chat.id
             process = raw_converter(livelink, f'audio{chat_id}.raw', f'video{chat_id}.raw')
