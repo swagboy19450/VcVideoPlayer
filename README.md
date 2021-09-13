@@ -13,13 +13,17 @@ The easiest way to deploy this Bot is via Heroku.
 
 
 
-# Credit 🔥 
-```
-|🇮🇳 Louis 
-|🇮🇳 Sammy
-|🇮🇳 Blaze
-|🇮🇳 Safone
-```
+# Our Credit 🔥 
+
+[![Louis](https://img.shields.io/badge/telegram-1b77FF.svg?style=for-the-badge&logo=telegram)](https://t.me/DeeCodeBots)
+[![Error](https://img.shields.io/badge/telegram-1b77FF.svg?style=for-the-badge&logo=telegram)](https://t.me/ProErrorXD)
+[![Blaze](https://img.shields.io/badge/telegram-1b77FF.svg?style=for-the-badge&logo=telegram)](https://t.me/piroXpower)
+[![Harsh](https://img.shields.io/badge/telegram-1b77FF.svg?style=for-the-badge&logo=telegram)](https://t.me/Jalim_munda)
+[![Devil](https://img.shields.io/badge/telegram-1b77FF.svg?style=for-the-badge&logo=telegram)](https://t.me/DEVILDAD_PRINCE)
+[![Lokaman](https://img.shields.io/badge/telegram-1b77FF.svg?style=for-the-badge&logo=telegram)](https://t.me/mrlokaman)
+
+# Special Thanks To 💞
+
 - [Laky](https://github.com/Laky-64) for [pytgcalls](https://github.com/pytgcalls/pytgcalls)
 - [Dan](https://github.com/delivrance) for [Pyrogram](https://github.com/pyrogram/pyrogram)
 
