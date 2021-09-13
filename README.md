@@ -15,12 +15,13 @@ The easiest way to deploy this Bot is via Heroku.
 
 # Our Credit 🔥 
 
-[![Louis](https://img.shields.io/badge/vc-1b77FF.svg?style=for-the-badge&logo=telegram)](https://t.me/DeeCodeBots)
-[![Error](https://img.shields.io/badge/telegram-1b77FF.svg?style=for-the-badge&logo=telegram)](https://t.me/ProErrorXD)
-[![Blaze](https://img.shields.io/badge/telegram-1b77FF.svg?style=for-the-badge&logo=telegram)](https://t.me/piroXpower)
-[![Harsh](https://img.shields.io/badge/telegram-1b77FF.svg?style=for-the-badge&logo=telegram)](https://t.me/Jalim_munda)
-[![Devil](https://img.shields.io/badge/telegram-1b77FF.svg?style=for-the-badge&logo=telegram)](https://t.me/DEVILDAD_PRINCE)
-[![Lokaman](https://img.shields.io/badge/telegram-1b77FF.svg?style=for-the-badge&logo=telegram)](https://t.me/mrlokaman)
+[![Louis](https://img.shields.io/badge/Louis-1b77FF.svg?style=for-the-badge&logo=telegram)](https://t.me/DeeCodeBots)
+[![Error](https://img.shields.io/badge/Error-1b77FF.svg?style=for-the-badge&logo=telegram)](https://t.me/ProErrorXD)
+[![Blaze](https://img.shields.io/badge/Blaze-1b77FF.svg?style=for-the-badge&logo=telegram)](https://t.me/piroXpower)
+[![Harsh](https://img.shields.io/badge/Harsh-1b77FF.svg?style=for-the-badge&logo=telegram)](https://t.me/Jalim_munda)
+[![Devil](https://img.shields.io/badge/Devil-1b77FF.svg?style=for-the-badge&logo=telegram)](https://t.me/DEVILDAD_PRINCE)
+[![Lokaman](https://img.shields.io/badge/Lokaman-1b77FF.svg?style=for-the-badge&logo=telegram)](https://t.me/mrlokaman)
+[![Safone](https://img.shields.io/badge/Safone-1b77FF.svg?style=for-the-badge&logo=telegram)](https://t.me/imSafone)
 
 # Special Thanks To 💞
 
