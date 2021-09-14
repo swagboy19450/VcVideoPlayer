@@ -15,7 +15,6 @@ from youtubesearchpython import VideosSearch
 
 app = Client(SESSION_NAME, API_ID, API_HASH)
 call_py = PyTgCalls(app)
-FFMPEG_PROCESSES = {}
 opts = {"format": "best[height=?480]/best", "noplaylist": True}
 ydl = YoutubeDL(opts)
 
