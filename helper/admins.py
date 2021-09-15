@@ -1,4 +1,5 @@
 import assets.admins
+import time 
 from typing import List
 
 from pyrogram.types import Chat
@@ -12,6 +13,7 @@ async def get_administrators(chat: Chat) -> List[int]:
     if get:
         return get
     else:
+        time.sleep(3) #control flood wait 
         administrators = await chat.get_members(filter="administrators")
         to_set = []
 
