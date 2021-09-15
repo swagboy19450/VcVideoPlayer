@@ -61,7 +61,7 @@ async def stream(client, m: Message):
                     return
             else:
                 livelink = query
-                photoid = "https://telegra.ph/file/62e86d8aadde9a8cbf9c2.jpg"
+                photoid = "https://telegra.ph/file/b10a65c868444c0611773.jpg"
                 msg = await m.reply_photo(photo=photoid, caption="`Starting Video Stream...`")
                     
             chat_id = m.chat.id
